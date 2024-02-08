@@ -1,5 +1,5 @@
 import { useTodoContext } from '../../../hooks/use-todo-context';
-import { TodoCard } from './todo-card';
+import { TodoCard } from './todo-card/todo-card';
 
 export function AllTodo() {
   const { allTodo } = useTodoContext();
