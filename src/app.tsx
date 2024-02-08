@@ -1,3 +1,9 @@
+import { Navbar } from './components/shared/navbar/navbar';
+
 export function App() {
-  return <div>Task Flow</div>;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 }
