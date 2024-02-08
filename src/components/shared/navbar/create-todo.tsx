@@ -10,6 +10,7 @@ import { priorities } from '../../../lib/data';
 import { useTodoContext } from '../../../hooks/use-todo-context';
 import { PriorityType } from '../../../utils/types';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export function CreateTodo() {
   const {
@@ -39,6 +40,7 @@ export function CreateTodo() {
     });
 
     reset();
+    toast.success('Todo Created!');
     setOpen(false);
   });
 

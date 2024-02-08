@@ -2,7 +2,8 @@ import { twMerge } from 'tailwind-merge';
 import { TodoType } from '../../../utils/types';
 import { BiSolidEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
-import { ImCheckmark } from 'react-icons/im';
+import { useTodoContext } from '../../../hooks/use-todo-context';
+import toast from 'react-hot-toast';
 
 export function TodoCard({
   id,
@@ -13,8 +14,12 @@ export function TodoCard({
   priority,
 }: TodoType) {
   const date = new Date(addedOn);
+  const { completeTodo } = useTodoContext();
 
-  console.log(isCompleted);
+  const onTodoComplete = () => {
+    completeTodo(id);
+    toast.success('To is completed');
+  };
 
   return (
     <div className='rounded-md bg-white p-5 shadow'>
@@ -35,7 +40,10 @@ export function TodoCard({
               Completed
             </button>
           ) : (
-            <button className='rounded bg-red-200 px-3 py-1 text-xs text-red-600'>
+            <button
+              onClick={onTodoComplete}
+              className='rounded bg-red-200 px-3 py-1 text-xs text-red-600'
+            >
               Incomplete
             </button>
           )}

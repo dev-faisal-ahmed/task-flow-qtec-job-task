@@ -8,6 +8,7 @@ import {
 type TodoContextType = {
   allTodo: TodoType[];
   addNewTodo: (todo: TodoType) => void;
+  completeTodo: (id: string) => void;
 };
 
 export const TodoContext = createContext<TodoContextType | null>(null);
@@ -23,8 +24,22 @@ export function TodoProvider({ children }: WrapperType) {
     });
   };
 
+  const completeTodo = (id: string) => {
+    setAllTodo((prev) => {
+      const updatedTodo = prev.map((todo) => {
+        if (todo.id === id) {
+          todo.isCompleted = true;
+          return todo;
+        }
+        return todo;
+      });
+      setTodoToLocal(updatedTodo);
+      return updatedTodo;
+    });
+  };
+
   return (
-    <TodoContext.Provider value={{ allTodo, addNewTodo }}>
+    <TodoContext.Provider value={{ allTodo, addNewTodo, completeTodo }}>
       {children}
     </TodoContext.Provider>
   );
