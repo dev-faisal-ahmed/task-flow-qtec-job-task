@@ -14,11 +14,19 @@ import { WrapperType } from '../../utils/types';
 type ModalProps = WrapperType & {
   trigger: ReactNode;
   title: string;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 };
 
-export function Modal({ children, trigger, title }: ModalProps) {
+export function Modal({
+  children,
+  trigger,
+  title,
+  open,
+  onOpenChange,
+}: ModalProps) {
   return (
-    <Root>
+    <Root open={open} onOpenChange={onOpenChange}>
       <Trigger asChild>{trigger}</Trigger>
       <Portal>
         <Overlay className='fixed inset-0 bg-black/50 data-[state=open]:animate-overlayShow'>

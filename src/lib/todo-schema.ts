@@ -8,7 +8,7 @@ export const AddTodoSchema = z.object({
 
   description: z
     .string({ required_error: 'Description is required' })
-    .min(2, { message: 'Min length is 2' }),
+    .min(10, { message: 'Min length is 10' }),
 
   priority: z.enum([...(priorities as [string, ...string[]])], {
     required_error: 'Priority is required and it has to be low, medium, high',

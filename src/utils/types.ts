@@ -7,7 +7,7 @@ export type TodoType = {
   title: string;
   description: string;
   isCompleted: boolean;
-  date: number;
+  addedOn: number;
   priority: PriorityType;
 };
 

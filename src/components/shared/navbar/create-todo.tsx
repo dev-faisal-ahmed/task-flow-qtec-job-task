@@ -9,6 +9,7 @@ import { Select } from '../form/select';
 import { priorities } from '../../../lib/data';
 import { useTodoContext } from '../../../hooks/use-todo-context';
 import { PriorityType } from '../../../utils/types';
+import { useState } from 'react';
 
 export function CreateTodo() {
   const {
@@ -20,32 +21,33 @@ export function CreateTodo() {
     resolver: zodResolver(AddTodoSchema),
   });
 
-  const { dispatch } = useTodoContext();
+  const [open, setOpen] = useState(false);
+  const { addNewTodo } = useTodoContext();
 
   const handleAddTodo = handleSubmit((data) => {
     const { title, description, priority } = data;
-    const date = new Date().getTime();
-    const id = date.toString(32);
+    const addedOn = new Date().getTime();
+    const id = addedOn.toString(32);
 
-    dispatch({
-      type: 'ADD_TODO',
-      payload: {
-        id,
-        title: title.trim(),
-        description: description.trim(),
-        date,
-        isCompleted: false,
-        priority: priority as PriorityType,
-      },
+    addNewTodo({
+      title: title.trim(),
+      description: description.trim(),
+      priority: priority as PriorityType,
+      addedOn,
+      id,
+      isCompleted: false,
     });
 
     reset();
+    setOpen(false);
   });
 
   return (
     <Modal
+      open={open}
+      onOpenChange={setOpen}
       trigger={
-        <span className='whitespace-nowrap rounded bg-primary-600 px-3 py-2 text-white transition hover:bg-primary-700'>
+        <span className='cursor-pointer whitespace-nowrap rounded bg-primary-600 px-3 py-2 text-white transition hover:bg-primary-700'>
           Create Todo
         </span>
       }
