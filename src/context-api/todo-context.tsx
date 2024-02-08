@@ -12,6 +12,8 @@ type TodoContextType = {
   deleteTodo: (id: string) => void;
   updateTodo: (todo: TodoType) => void;
   filter: (filterParams: FilterParamsType) => void;
+  search: (searchKeys: string[]) => void;
+  reset: () => void;
 };
 
 export const TodoContext = createContext<TodoContextType | null>(null);
@@ -84,6 +86,38 @@ export function TodoProvider({ children }: WrapperType) {
     });
   };
 
+  const search = (searchKeys: string[]) => {
+    setAllTodo(() => {
+      const allTodo = getTodoFromLocal();
+      const todoObject = searchKeys.reduce(
+        (obj: Record<string, TodoType>, searchKey) => {
+          // object is being used so that same todo does not appear more than once.
+          // we could have do it using array but that will increase time complexity
+
+          for (const todo of allTodo) {
+            const lowerSearchKey = searchKey.toLowerCase();
+            const title = todo.title.toLowerCase();
+            const description = todo.description.toLowerCase();
+
+            if (
+              title.includes(lowerSearchKey) ||
+              description.includes(lowerSearchKey)
+            ) {
+              obj[todo.id] = todo; // if description or title matches we will insert in into the object
+            }
+          }
+          return obj;
+        },
+        {}, // by default empty object
+      );
+      return Object.values(todoObject); // returning as array of todo
+    });
+  };
+
+  const reset = () => {
+    setAllTodo(getTodoFromLocal());
+  };
+
   return (
     <TodoContext.Provider
       value={{
@@ -93,6 +127,8 @@ export function TodoProvider({ children }: WrapperType) {
         deleteTodo,
         updateTodo,
         filter,
+        search,
+        reset,
       }}
     >
       {children}
