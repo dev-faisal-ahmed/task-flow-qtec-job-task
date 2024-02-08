@@ -13,7 +13,7 @@
     @apply mx-auto max-w-[1200px] px-5;
   }
   .customized_scrollbar {
-    @apply scrollbar-thin scrollbar-track-primary-50 scrollbar-thumb-primary-100;
+    @apply scrollbar-thin scrollbar-track-primary-100 scrollbar-thumb-primary-200;
   }
 }
 

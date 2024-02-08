@@ -5,10 +5,12 @@ import { TodoProvider } from './context-api/todo-context';
 
 export function App() {
   return (
-    <TodoProvider>
-      <Navbar />
-      <AllTodo />
-      <Toaster />
-    </TodoProvider>
+    <main className='customized_scrollbar h-screen overflow-y-auto'>
+      <TodoProvider>
+        <Navbar />
+        <AllTodo />
+        <Toaster />
+      </TodoProvider>
+    </main>
   );
 }

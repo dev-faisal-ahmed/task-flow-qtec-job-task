@@ -1,6 +1,11 @@
 import { ReactNode } from 'react';
 
 export type PriorityType = 'low' | 'medium' | 'high';
+export type FilterParamsType =
+  | PriorityType
+  | 'normal'
+  | 'completed'
+  | 'incompleted';
 
 export type TodoType = {
   id: string;

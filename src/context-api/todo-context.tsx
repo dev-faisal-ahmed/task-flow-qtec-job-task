@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { TodoType, WrapperType } from '../utils/types';
+import { FilterParamsType, TodoType, WrapperType } from '../utils/types';
 import {
   getTodoFromLocal,
   setTodoToLocal,
@@ -11,6 +11,7 @@ type TodoContextType = {
   completeTodo: (id: string) => void;
   deleteTodo: (id: string) => void;
   updateTodo: (todo: TodoType) => void;
+  filter: (filterParams: FilterParamsType) => void;
 };
 
 export const TodoContext = createContext<TodoContextType | null>(null);
@@ -61,9 +62,38 @@ export function TodoProvider({ children }: WrapperType) {
     });
   };
 
+  const filter = (filterParams: FilterParamsType) => {
+    setAllTodo(() => {
+      const todo = getTodoFromLocal();
+      switch (filterParams) {
+        case 'normal':
+          return todo;
+        case 'high':
+          return todo.filter((todo) => todo.priority === 'high');
+        case 'medium':
+          return todo.filter((todo) => todo.priority === 'medium');
+        case 'low':
+          return todo.filter((todo) => todo.priority === 'low');
+        case 'completed':
+          return todo.filter((todo) => todo.isCompleted);
+        case 'incompleted':
+          return todo.filter((todo) => !todo.isCompleted);
+        default:
+          return getTodoFromLocal() || [];
+      }
+    });
+  };
+
   return (
     <TodoContext.Provider
-      value={{ allTodo, addNewTodo, completeTodo, deleteTodo, updateTodo }}
+      value={{
+        allTodo,
+        addNewTodo,
+        completeTodo,
+        deleteTodo,
+        updateTodo,
+        filter,
+      }}
     >
       {children}
     </TodoContext.Provider>
