@@ -29,9 +29,9 @@ export function TextArea({
       </label>
       <textarea
         className={twMerge(
-          'border-primary-100 ring-primary-600 focus:border-primary-600 w-full rounded-md border bg-transparent px-3 py-1 outline-none placeholder:text-sm focus:ring-1',
+          'w-full rounded-md border border-primary-100 bg-transparent px-3 py-1 outline-none ring-primary-600 placeholder:text-sm focus:border-primary-600 focus:ring-1',
           error
-            ? 'border-error-600 ring-error-600 focus:border-error-600 focus:ring-1'
+            ? 'border-red-600 ring-red-600 focus:border-red-600 focus:ring-1'
             : null,
         )}
         id={name}
@@ -41,7 +41,7 @@ export function TextArea({
         rows={3}
       />
       {error?.message && (
-        <p className='bg-error-50 text-error-600 mt-1 block w-full rounded px-2 py-[2px] text-xs'>
+        <p className='mt-1 block w-full rounded bg-red-50 px-2 py-[2px] text-xs text-red-600'>
           {error.message}
         </p>
       )}
